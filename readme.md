@@ -1,0 +1,6 @@
+--create database with the name of practice
+--create table inside of it users with 4 columns
+-1. id
+-2. name
+-3. email
+-4. DT (Date & Time)
