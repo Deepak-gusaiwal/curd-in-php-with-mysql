@@ -12,6 +12,7 @@
   <form class="form" action="./includes/insertData.php" method="post">
     <input placeholder="Name" type="text" name="name">
     <input placeholder="Email" type="email" name="email">
+    <input placeholder="Password" type="password" name="password">
     <button name="insertData" type="submit">submit</button>
   </form>
 

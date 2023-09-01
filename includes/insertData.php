@@ -3,26 +3,34 @@
 if (isset($_POST['insertData'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
+
     try {
         // connecting to the db
         require_once "./config/dbConnection.php";
         if (empty($name) || empty($email)) {
             echo "<script>alert('provide valid data')</script>";
             sendBack();
-        }else{
-            $sql = "INSERT INTO users(name,email) VALUES (:name,:email)";
+        } else {
+            //hashing the password
+            $option = [
+                "cost" => 12
+            ];
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $option);
+            $sql = "INSERT INTO users(name,email,password) VALUES (:name,:email,:password)";
             $query = $pdo->prepare($sql);
-            $query->bindParam(":name",$name);
-            $query->bindParam(":email",$email);
+            $query->bindParam(":name", $name);
+            $query->bindParam(":email", $email);
+            $query->bindParam(":password", $hashedPassword);
             $query->execute();
-            $pdo=null;
+            $pdo = null;
             $query = null;
             header("Location:../success.php");
             exit();
         }
 
     } catch (PDOException $e) {
-        die('ERROR:insertion of data failed '.$e->getMessage());
+        die('ERROR:insertion of data failed ' . $e->getMessage());
     }
 }
 ?>
